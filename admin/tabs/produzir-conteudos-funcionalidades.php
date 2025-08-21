@@ -166,16 +166,27 @@ $conteudo_formatado .= gerar_html_cta($cta_titulo, $cta_descricao, $cta_botao, $
         $temas_sugeridos[$tema_index]['post_id'] = $post_id;
         $temas_sugeridos[$tema_index]['link'] = get_permalink($post_id);
 
-        // Geração de imagem após o conteúdo ser produzido
-        // Adaptar o prompt de imagem para o idioma selecionado
-        $prompt_imagem = obter_prompt_imagem($tema, $palavras_chave, strip_tags($conteudo_formatado), $idioma);
-        $imagem_url = gerar_imagem_dalle($prompt_imagem, $api_key);
+        // Verificar se deve gerar imagem (padrão: sim)
+        $gerar_imagem = isset($temas_sugeridos[$tema_index]['gerar_imagem']) 
+                       ? $temas_sugeridos[$tema_index]['gerar_imagem'] 
+                       : true;
 
-        if ($imagem_url) {
-            anexar_imagem_ao_post($imagem_url, $post_id, $tema);
-            $temas_sugeridos[$tema_index]['imagem'] = $imagem_url;
+        $imagem_url = null;
+        
+        if ($gerar_imagem) {
+            // Geração de imagem após o conteúdo ser produzido
+            // Adaptar o prompt de imagem para o idioma selecionado
+            $prompt_imagem = obter_prompt_imagem($tema, $palavras_chave, strip_tags($conteudo_formatado), $idioma);
+            $imagem_url = gerar_imagem_dalle($prompt_imagem, $api_key);
+
+            if ($imagem_url) {
+                anexar_imagem_ao_post($imagem_url, $post_id, $tema);
+                $temas_sugeridos[$tema_index]['imagem'] = $imagem_url;
+            } else {
+                error_log('Erro ao gerar imagem: URL não obtida.');
+            }
         } else {
-            error_log('Erro ao gerar imagem: URL não obtida.');
+            error_log('Geração de imagem desabilitada para o tema: ' . $tema);
         }
 
         update_option('temas_sugeridos', $temas_sugeridos);
@@ -468,6 +479,40 @@ function publicar_temas_em_massa() {
     }
 }
 
+// ===================================
+// AJAX: Atualizar preferência de geração de imagem
+// ===================================
+
+add_action('wp_ajax_atualizar_preferencia_imagem', 'bia_atualizar_preferencia_imagem_callback');
+
+function bia_atualizar_preferencia_imagem_callback() {
+    if (!current_user_can('edit_posts')) {
+        wp_send_json_error('Permissão negada.');
+    }
+
+    $tema_index = isset($_POST['tema_index']) ? sanitize_text_field($_POST['tema_index']) : '';
+    $gerar_imagem = isset($_POST['gerar_imagem']) ? filter_var($_POST['gerar_imagem'], FILTER_VALIDATE_BOOLEAN) : true;
+
+    if ($tema_index === '') {
+        wp_send_json_error('Índice do tema não fornecido.');
+    }
+
+    $temas_sugeridos = get_option('temas_sugeridos', array());
+
+    if (!isset($temas_sugeridos[$tema_index])) {
+        wp_send_json_error('Tema não encontrado.');
+    }
+
+    $temas_sugeridos[$tema_index]['gerar_imagem'] = $gerar_imagem;
+    update_option('temas_sugeridos', $temas_sugeridos);
+
+    wp_send_json_success(array(
+        'tema_index' => $tema_index,
+        'gerar_imagem' => $gerar_imagem,
+        'message' => 'Preferência de geração de imagem atualizada com sucesso.'
+    ));
+}
+
 // Função para excluir tema individual
 // Função para excluir tema individual e mover para aba "Excluídos"
 add_action('wp_ajax_excluir_tema', 'excluir_tema');
@@ -553,6 +598,28 @@ function bia_adicionar_js_eventos() {
         // Variável global para controlar se a confirmação já foi mostrada
         window.confirmacaoExclusaoJaMostrada = false;
         window.bia_conteudos_produzidos = 0;
+
+        // Event handler para toggle de geração de imagem
+        $('.gerar-imagem-toggle').on('change', function() {
+            var tema_index = $(this).data('tema');
+            var gerar_imagem = $(this).is(':checked');
+            
+            $.post(ajaxurl, {
+                action: 'atualizar_preferencia_imagem',
+                tema_index: tema_index,
+                gerar_imagem: gerar_imagem
+            }, function(response) {
+                if (!response.success) {
+                    console.error('Erro ao atualizar preferência de imagem:', response.data);
+                    // Reverter o checkbox em caso de erro
+                    $('input[data-tema="' + tema_index + '"]').prop('checked', !gerar_imagem);
+                }
+            }).fail(function() {
+                console.error('Erro na requisição de atualização de preferência de imagem');
+                // Reverter o checkbox em caso de erro
+                $('input[data-tema="' + tema_index + '"]').prop('checked', !gerar_imagem);
+            });
+        });
         
         // Remover quaisquer event handlers existentes para evitar duplicação
         $('.excluir-sugestao').off('click');

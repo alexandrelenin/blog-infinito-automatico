@@ -67,9 +67,19 @@
                             <span class="dashicons dashicons-visibility"></span> Ver Artigo
                         </a>
                     <?php } else { ?>
-                        <button type="button" class="gerar-conteudo botao-roxo" data-tema="<?php echo esc_attr($index); ?>">
-                            <span class="dashicons dashicons-edit"></span> Produzir Artigo
-                        </button>
+                        <div class="producao-controles">
+                            <button type="button" class="gerar-conteudo botao-roxo" data-tema="<?php echo esc_attr($index); ?>">
+                                <span class="dashicons dashicons-edit"></span> Produzir Artigo
+                            </button>
+                            <div class="image-generation-controls" style="margin-top: 5px;">
+                                <label style="font-size: 11px; display: flex; align-items: center;">
+                                    <input type="checkbox" class="gerar-imagem-toggle" 
+                                           data-tema="<?php echo esc_attr($index); ?>" 
+                                           <?php echo (isset($tema['gerar_imagem']) ? ($tema['gerar_imagem'] ? 'checked' : '') : 'checked'); ?>>
+                                    <span style="margin-left: 4px;">Gerar imagem</span>
+                                </label>
+                            </div>
+                        </div>
                     <?php } ?>
                     <div class="progress-bar-container" id="progress-bar-<?php echo esc_attr($index); ?>">
                         <div class="progress-bar-fill"></div>
