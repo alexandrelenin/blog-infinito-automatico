@@ -1,0 +1,310 @@
+/* 
+ * Changelog - CSS
+ * BIA - Blog Infinito Automático
+ * Versão: 1.0
+ */
+
+/* Container principal */
+.bia-changelog-container {
+    max-width: 100%;
+    margin: 20px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Header da página */
+.bia-changelog-header {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    border-left: 4px solid #8c52ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.bia-changelog-header h2 {
+    margin: 0;
+    color: #23282d;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.bia-changelog-header p {
+    margin: 5px 0 0 0;
+    color: #666;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Botão de refresh */
+.bia-changelog-refresh {
+    background: #8c52ff;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bia-changelog-refresh:hover {
+    background: #7b48e5;
+    transform: translateY(-1px);
+}
+
+.bia-changelog-refresh .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Indicador de última atualização */
+.bia-changelog-updated {
+    background: #e6f3f7;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border-left: 4px solid #0073aa;
+    font-size: 13px;
+    color: #0073aa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bia-changelog-updated .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Conteúdo principal */
+.bia-changelog-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.6;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Títulos */
+.bia-changelog-content h1 {
+    color: #8c52ff;
+    border-bottom: 2px solid #8c52ff;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.bia-changelog-content h2 {
+    color: #23282d;
+    border-left: 4px solid #8c52ff;
+    padding-left: 15px;
+    margin: 30px 0 20px 0;
+    font-size: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.bia-changelog-content h3 {
+    color: #2e7d32;
+    margin: 20px 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Listas */
+.bia-changelog-content ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.bia-changelog-content li {
+    margin: 8px 0;
+    color: #333;
+}
+
+/* Elementos de texto */
+.bia-changelog-content code {
+    background: #f1f1f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #d63384;
+}
+
+.bia-changelog-content strong {
+    color: #8c52ff;
+    font-weight: 600;
+}
+
+.bia-changelog-content em {
+    color: #666;
+    font-style: italic;
+}
+
+.bia-changelog-content blockquote {
+    border-left: 4px solid #ddd;
+    margin: 20px 0;
+    padding: 10px 20px;
+    background: #f9f9f9;
+    color: #666;
+    font-style: italic;
+    border-radius: 4px;
+}
+
+/* Links */
+.bia-changelog-content a {
+    color: #8c52ff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.bia-changelog-content a:hover {
+    text-decoration: underline;
+    color: #7b48e5;
+}
+
+/* Parágrafos */
+.bia-changelog-content p {
+    margin: 15px 0;
+    color: #333;
+}
+
+/* Estilos para emojis em títulos */
+.bia-changelog-content h3:contains("✨")::before {
+    content: "✨";
+    margin-right: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 782px) {
+    .bia-changelog-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .bia-changelog-refresh {
+        align-self: flex-end;
+    }
+    
+    .bia-changelog-content {
+        padding: 20px;
+        max-height: 60vh;
+    }
+    
+    .bia-changelog-content h1 {
+        font-size: 22px;
+    }
+    
+    .bia-changelog-content h2 {
+        font-size: 18px;
+        padding: 10px;
+    }
+}
+
+/* Scrollbar personalizada */
+.bia-changelog-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.bia-changelog-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.bia-changelog-content::-webkit-scrollbar-thumb {
+    background: #8c52ff;
+    border-radius: 4px;
+}
+
+.bia-changelog-content::-webkit-scrollbar-thumb:hover {
+    background: #7b48e5;
+}
+
+/* Animações */
+.bia-changelog-container {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Melhorias de acessibilidade */
+.bia-changelog-content:focus {
+    outline: 2px solid #8c52ff;
+    outline-offset: 2px;
+}
+
+/* Destaque para versões */
+.bia-changelog-content h2:contains("[") {
+    background: linear-gradient(90deg, #f8f9fa 0%, #e6f3f7 100%);
+    border-left-color: #0073aa;
+}
+
+/* Estado de loading para refresh */
+.bia-changelog-refresh.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.bia-changelog-refresh.loading .dashicons {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Estilos para data de atualização */
+.bia-changelog-updated time {
+    font-weight: 600;
+    color: #0073aa;
+}
+
+/* Melhorias na legibilidade */
+.bia-changelog-content {
+    font-size: 14px;
+}
+
+.bia-changelog-content h1,
+.bia-changelog-content h2,
+.bia-changelog-content h3 {
+    line-height: 1.3;
+}
+
+.bia-changelog-content ul li {
+    line-height: 1.5;
+}
+
+/* Indicadores visuais para tipos de mudança */
+.bia-changelog-content li:contains("✨")::before { content: "✨ "; }
+.bia-changelog-content li:contains("🔧")::before { content: "🔧 "; }
+.bia-changelog-content li:contains("🐛")::before { content: "🐛 "; }
+.bia-changelog-content li:contains("🗑️")::before { content: "🗑️ "; }
+.bia-changelog-content li:contains("🔒")::before { content: "🔒 "; }
+.bia-changelog-content li:contains("📖")::before { content: "📖 "; }
+.bia-changelog-content li:contains("⚡")::before { content: "⚡ "; }

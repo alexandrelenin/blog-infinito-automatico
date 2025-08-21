@@ -33,6 +33,7 @@ function bia_render_dashboard() {
     echo '<a href="?page=bia-blog-infinito-automatico&tab=excluidos" class="nav-tab ' . ($tab === 'excluidos' ? 'nav-tab-active' : '') . '">Excluídos</a>';
     echo '<a href="?page=bia-blog-infinito-automatico&tab=loja_da_bia" class="nav-tab ' . ($tab === 'loja_da_bia' ? 'nav-tab-active' : '') . '">Loja da BIA</a>';
     echo '<a href="?page=bia-blog-infinito-automatico&tab=seja_afiliado" class="nav-tab ' . ($tab === 'seja_afiliado' ? 'nav-tab-active' : '') . '">Seja Afiliado</a>';
+    echo '<a href="?page=bia-blog-infinito-automatico&tab=changelog" class="nav-tab ' . ($tab === 'changelog' ? 'nav-tab-active' : '') . '">Changelog</a>';
     echo '</h2>';
 
     switch ($tab) {
@@ -62,6 +63,9 @@ function bia_render_dashboard() {
     break;
         case 'seja_afiliado':
             bia_seja_afiliado();
+            break;
+        case 'changelog':
+            bia_changelog();
             break;
         default:
             bia_minha_conta();
@@ -95,3 +99,20 @@ function bia_enqueue_produzir_conteudos_assets($hook) {
     wp_enqueue_script('bia-producao-js', BIA_URL . 'assets/js/produzir-conteudos.js', array('jquery'), null, true);
 }
 add_action('admin_enqueue_scripts', 'bia_enqueue_produzir_conteudos_assets');
+
+// ============================
+// ENQUEUE PARA CHANGELOG
+// ============================
+function bia_enqueue_changelog_assets($hook) {
+    if ($hook !== 'toplevel_page_bia-blog-infinito-automatico') {
+        return;
+    }
+
+    if (!isset($_GET['tab']) || $_GET['tab'] !== 'changelog') {
+        return;
+    }
+
+    // Custom CSS para Changelog
+    wp_enqueue_style('bia-changelog-css', BIA_URL . 'assets/css/changelog.css', array(), null);
+}
+add_action('admin_enqueue_scripts', 'bia_enqueue_changelog_assets');

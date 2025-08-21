@@ -80,6 +80,9 @@ if (!defined('BIA_PLUGIN_BLOQUEADO')) {
 
     error_log('Incluindo: admin/tabs/seja-afiliado.php');
     require_once BIA_PATH . 'admin/tabs/seja-afiliado.php';
+    
+    error_log('Incluindo: admin/tabs/changelog.php');
+    require_once BIA_PATH . 'admin/tabs/changelog.php';
 }
 
 // ============================
