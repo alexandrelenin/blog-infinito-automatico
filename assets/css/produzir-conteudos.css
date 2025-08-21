@@ -826,7 +826,8 @@ tr.warning {
 }
 .botao-roxo,
 .botao-verde,
-.botao-vermelho {
+.botao-vermelho,
+.botao-azul {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -853,9 +854,13 @@ tr.warning {
 .botao-vermelho { background: #dc3232; }
 .botao-vermelho:hover { background: #ba2828; transform: translateY(-1px); }
 
+.botao-azul { background: #0073aa; }
+.botao-azul:hover { background: #005177; transform: translateY(-1px); }
+
 .botao-roxo .dashicons,
 .botao-verde .dashicons,
-.botao-vermelho .dashicons {
+.botao-vermelho .dashicons,
+.botao-azul .dashicons {
     font-size: 16px;
     width: 16px;
     height: 16px;
@@ -878,6 +883,7 @@ tr.warning {
 .botao-roxo:hover,
 .botao-verde:hover,
 .botao-vermelho:hover,
+.botao-azul:hover,
 .bia-action-button:hover {
     font-weight: 600 !important;
     text-decoration: none !important;

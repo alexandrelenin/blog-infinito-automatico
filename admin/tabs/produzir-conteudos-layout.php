@@ -14,6 +14,9 @@
         <option value="publicar">Publicar Selecionados</option>
     </select>
     <button type="submit" id="executar-acao-em-massa" class="button executar">Executar</button>
+    <button type="button" id="limpar-todos-temas" class="button button-secondary" style="margin-left: 10px;">
+        <span class="dashicons dashicons-trash"></span> Limpar Todos
+    </button>
     <div id="mass-action-warning" style="display:none; color: red; margin-top: 10px;">Não saia desta página até a conclusão.</div>
 </div>
 <form id="form-acoes-temas" method="post">
@@ -63,9 +66,14 @@
                 </td>
                 <td>
                     <?php if (in_array($status_temas[$index] ?? '', ['Produzido', 'Publicado'])) { ?>
-                        <a href="<?php echo esc_url($tema['link']); ?>" target="_blank" class="botao-verde">
-                            <span class="dashicons dashicons-visibility"></span> Ver Artigo
-                        </a>
+                        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <a href="<?php echo esc_url($tema['link']); ?>" target="_blank" class="botao-verde">
+                                <span class="dashicons dashicons-visibility"></span> Ver Artigo
+                            </a>
+                            <a href="<?php echo esc_url(admin_url('post.php?post=' . $tema['post_id'] . '&action=edit')); ?>" target="_blank" class="botao-azul">
+                                <span class="dashicons dashicons-edit"></span> Editar
+                            </a>
+                        </div>
                     <?php } else { ?>
                         <div class="producao-controles">
                             <button type="button" class="gerar-conteudo botao-roxo" data-tema="<?php echo esc_attr($index); ?>">
@@ -75,7 +83,7 @@
                                 <label style="font-size: 11px; display: flex; align-items: center;">
                                     <input type="checkbox" class="gerar-imagem-toggle" 
                                            data-tema="<?php echo esc_attr($index); ?>" 
-                                           <?php echo (isset($tema['gerar_imagem']) ? ($tema['gerar_imagem'] ? 'checked' : '') : 'checked'); ?>>
+                                           <?php echo (isset($tema['gerar_imagem']) ? ($tema['gerar_imagem'] ? 'checked' : '') : ''); ?>>
                                     <span style="margin-left: 4px;">Gerar imagem</span>
                                 </label>
                             </div>

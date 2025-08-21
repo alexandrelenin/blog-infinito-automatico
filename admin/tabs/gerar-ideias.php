@@ -134,6 +134,15 @@ $cta_imagem_padrao = '';
             color: #8c52ff;
         }
         
+        .bia-card-header:hover {
+            background: #f0f0f0;
+        }
+        
+        #cta-toggle-icon {
+            color: #666;
+            font-size: 16px;
+        }
+        
         .bia-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -314,6 +323,13 @@ $cor_primaria = get_theme_mod('primary_color', '#007cba');
     <div class="wrap bia-container">
         <h2>Gerar Ideias</h2>
         
+        <!-- Botão de Envio Superior -->
+        <div class="bia-submit-container" style="margin-bottom: 20px; text-align: left;">
+            <button type="submit" form="form_gerar_ideias" name="gerar_ideias" class="bia-submit-button">
+                <span class="dashicons dashicons-lightbulb"></span> Gerar Ideias
+            </button>
+        </div>
+        
         <form method="post" id="form_gerar_ideias">
             <!-- Seção: Informações Básicas -->
             <div class="bia-card">
@@ -481,10 +497,13 @@ $cor_primaria = get_theme_mod('primary_color', '#007cba');
             
 <!-- Seção: Call to Action -->
 <div class="bia-card">
-    <div class="bia-card-header">
+    <div class="bia-card-header" style="cursor: pointer;" onclick="toggleCTACard()">
         <span class="dashicons dashicons-megaphone"></span>
         <h3>Call to Action (Opcional)</h3>
+        <span class="dashicons dashicons-arrow-down-alt2" id="cta-toggle-icon" style="margin-left: auto; transition: transform 0.3s ease;"></span>
     </div>
+    
+    <div id="cta-card-content" style="display: none;">
 
     <div class="bia-grid">
         <div class="bia-form-group">
@@ -537,6 +556,8 @@ $cor_primaria = get_theme_mod('primary_color', '#007cba');
             A visualização do CTA aparecerá aqui conforme você preenche os campos acima.
         </div>
     </div>
+    
+    </div> <!-- Fim do conteúdo recolhível -->
 </div>
 
             
@@ -558,6 +579,24 @@ $cor_primaria = get_theme_mod('primary_color', '#007cba');
     </div>
 
     <script type="text/javascript">
+        // Função para controlar o toggle do card CTA
+        function toggleCTACard() {
+            var content = document.getElementById('cta-card-content');
+            var icon = document.getElementById('cta-toggle-icon');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+                icon.classList.remove('dashicons-arrow-down-alt2');
+                icon.classList.add('dashicons-arrow-up-alt2');
+            } else {
+                content.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+                icon.classList.remove('dashicons-arrow-up-alt2');
+                icon.classList.add('dashicons-arrow-down-alt2');
+            }
+        }
+        
         jQuery(document).ready(function($) {
             // Função para atualizar a visualização prévia
             function updatePreview() {

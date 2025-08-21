@@ -174,15 +174,23 @@ jQuery(document).ready(function ($) {
 
                 if (response.success) {
                     const link = response.data.link;
+                    const postId = response.data.post_id;
+                    const editLink = `/wp-admin/post.php?post=${postId}&action=edit`;
+                    
                     $('#tema-status-' + temaIndex).html(`
     <span class="bia-status-badge bia-status-produzido">
         <span class="dashicons dashicons-yes"></span> Produzido
     </span>
 `);
                     $('.gerar-conteudo[data-tema="' + temaIndex + '"]').replaceWith(`
-    <a href="${link}" target="_blank" class="botao-verde">
-        <span class="dashicons dashicons-visibility"></span> Ver Artigo
-    </a>
+    <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+        <a href="${link}" target="_blank" class="botao-verde">
+            <span class="dashicons dashicons-visibility"></span> Ver Artigo
+        </a>
+        <a href="${editLink}" target="_blank" class="botao-azul">
+            <span class="dashicons dashicons-edit"></span> Editar
+        </a>
+    </div>
 `);
 
                     $('.publicar-tema[data-tema="' + temaIndex + '"]').removeClass('botao-desabilitado').addClass('botao-verde').prop('disabled', false);
@@ -249,4 +257,60 @@ jQuery(document).ready(function ($) {
             });
         });
     }
+
+    // Função para limpar todos os temas
+    $('#limpar-todos-temas').on('click', function () {
+        var totalTemas = $('.selecionar-tema').length;
+        
+        if (totalTemas === 0) {
+            alert('Não há temas para remover.');
+            return;
+        }
+
+        if (!confirm(`Tem certeza que deseja remover todos os ${totalTemas} temas da lista? Esta ação não pode ser desfeita.`)) {
+            return;
+        }
+
+        // Selecionar todos os checkboxes
+        $('.selecionar-tema').prop('checked', true);
+        $('#selecionar-todos').prop('checked', true);
+
+        // Coletar todos os índices dos temas
+        var todosTemas = $('.selecionar-tema').map(function () {
+            return $(this).val();
+        }).get();
+
+        // Executar exclusão em massa
+        $('#mass-action-warning').show();
+        
+        // Reduzir a opacidade de todas as linhas
+        $('.selecionar-tema').closest('tr').css('opacity', '0.5');
+
+        $.post(ajaxurl, {
+            action: 'excluir_temas_em_massa',
+            temas: todosTemas
+        }, function (response) {
+            $('#mass-action-warning').hide();
+            
+            if (response.success) {
+                // Remover todas as linhas da tabela
+                $('.selecionar-tema').closest('tr').fadeOut(400, function () {
+                    $(this).remove();
+                });
+                alert('Todos os temas foram removidos com sucesso!');
+                
+                // Desmarcar o checkbox "selecionar todos"
+                $('#selecionar-todos').prop('checked', false);
+            } else {
+                // Restaurar a opacidade em caso de erro
+                $('.selecionar-tema').closest('tr').css('opacity', '1');
+                alert('Erro ao remover temas: ' + response.data);
+            }
+        }).fail(function (xhr, status, error) {
+            $('#mass-action-warning').hide();
+            // Restaurar a opacidade em caso de erro
+            $('.selecionar-tema').closest('tr').css('opacity', '1');
+            alert('Erro na requisição: ' + error);
+        });
+    });
 });
