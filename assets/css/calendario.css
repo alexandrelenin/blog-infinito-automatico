@@ -1,0 +1,291 @@
+/* 
+ * Calendário - CSS Moderno
+ * BIA - Blog Infinito Automático
+ * Versão: 2.0
+ */
+
+/* Estilos específicos para o calendário - sem afetar as abas */
+.bia-calendario-container {
+    max-width: 100%;
+    margin: 20px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Navegação do calendário */
+.bia-calendario-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 15px 20px;
+    border: 1px solid #e2e4e7;
+}
+
+.bia-calendario-navigation h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #23282d;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.bia-calendario-navigation .button {
+    background: #f7f7f7;
+    border-color: #ccc;
+    color: #555;
+    padding: 8px 14px;
+    height: auto;
+    line-height: 1.5;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+}
+
+.bia-calendario-navigation .button:hover {
+    background: #f0f0f0;
+    border-color: #999;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.bia-calendario-navigation .button:before {
+    font-family: dashicons;
+    font-size: 16px;
+    line-height: 1;
+    margin-right: 5px;
+}
+
+.bia-calendario-navigation .prev-month:before {
+    content: "\f341";
+}
+
+.bia-calendario-navigation .next-month:before {
+    content: "\f345";
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+.bia-calendario-navigation .next-month {
+    flex-direction: row-reverse;
+}
+
+/* Container do calendário */
+.calendar-container {
+    width: 100%;
+    height: calc(100vh - 180px);
+    overflow: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #e2e4e7;
+    padding: 0;
+}
+
+/* Tabela do calendário */
+.calendar {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    table-layout: fixed;
+    margin: 0;
+}
+
+.calendar th {
+    background-color: #f9f9f9;
+    color: #23282d;
+    font-weight: 600;
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #e2e4e7;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.calendar td {
+    border: 1px solid #e2e4e7;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+    height: 120px;
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.calendar td:hover {
+    background-color: #f9f9f9;
+}
+
+.calendar td strong {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background: #f0f0f0;
+    border-radius: 50%;
+    margin-bottom: 8px;
+    color: #23282d;
+    font-weight: 600;
+}
+
+.calendar td.empty {
+    background-color: #f9f9f9;
+}
+
+.calendar td.today {
+    background-color: #f0f7fb;
+    border: 1px solid #8c52ff;
+}
+
+.calendar td.today strong {
+    background-color: #8c52ff;
+    color: #fff;
+}
+
+/* Links de posts */
+.calendar td a {
+    display: block;
+    padding: 4px 8px;
+    margin: 3px 0;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+}
+
+.calendar td a.published {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+    border: 1px solid rgba(70, 180, 80, 0.3);
+}
+
+.calendar td a.published:hover {
+    background-color: #d0f0d0;
+    border-color: rgba(70, 180, 80, 0.5);
+}
+
+.calendar td a.scheduled {
+    background-color: #fff8e5;
+    color: #996500;
+    border: 1px solid rgba(255, 185, 0, 0.3);
+}
+
+.calendar td a.scheduled:hover {
+    background-color: #fff0c0;
+    border-color: rgba(255, 185, 0, 0.5);
+}
+
+/* Botão Ver Mais/Menos */
+.view-more {
+    display: inline-block;
+    font-size: 11px;
+    color: #8c52ff;
+    cursor: pointer;
+    padding: 3px 8px;
+    margin-top: 5px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.view-more:hover {
+    background: #e0e0e0;
+    color: #005f8b;
+}
+
+/* Contagem de posts */
+.post-count {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    font-size: 10px;
+    color: #666;
+    margin-left: 5px;
+}
+
+/* Responsividade */
+@media screen and (max-width: 782px) {
+    .bia-calendario-navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .bia-calendario-navigation .button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .calendar th, .calendar td {
+        padding: 5px;
+    }
+    
+    .calendar td {
+        height: 80px;
+    }
+    
+    .calendar td a {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.more-posts {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Legenda */
+.bia-calendario-legend {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid #e2e4e7;
+}
+
+.bia-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.bia-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.bia-legend-published {
+    background-color: #e6f7e6;
+    border: 1px solid rgba(70, 180, 80, 0.3);
+}
+
+.bia-legend-scheduled {
+    background-color: #fff8e5;
+    border: 1px solid rgba(255, 185, 0, 0.3);
+}
