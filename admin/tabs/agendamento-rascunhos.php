@@ -282,11 +282,17 @@ add_action('wp_ajax_bia_agendar_lote', function () {
         $hora_base = strtotime('+1 day', $hora_base);
     }
 
-    $dias_por_periodo = match($frequencia) {
-        'mensal' => 30,
-        'semanal' => 7,
-        default => 1,
-    };
+    switch($frequencia) {
+        case 'mensal':
+            $dias_por_periodo = 30;
+            break;
+        case 'semanal':
+            $dias_por_periodo = 7;
+            break;
+        default:
+            $dias_por_periodo = 1;
+            break;
+    }
 
     if ($index >= $total || $index >= count($rascunhos_ids)) {
         wp_send_json_success(['done' => true]);
