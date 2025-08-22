@@ -17,18 +17,16 @@ function bia_calendario() {
         $current_year++;
     }
 
-    $days_in_month = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);
+    // Usar date() em vez de cal_days_in_month() para compatibilidade
+    $days_in_month = date('t', mktime(0, 0, 0, $current_month, 1, $current_year));
 
-    // Nome do mês formatado
-    $formatter = new IntlDateFormatter(
-        'pt_BR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::NONE,
-        'America/Sao_Paulo',
-        IntlDateFormatter::GREGORIAN,
-        'MMMM yyyy'
-    );
-    $month_name = $formatter->format(new DateTime("$current_year-$current_month-01"));
+    // Nome do mês formatado usando date() nativo
+    $meses = [
+        1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril',
+        5 => 'Maio', 6 => 'Junho', 7 => 'Julho', 8 => 'Agosto',
+        9 => 'Setembro', 10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
+    ];
+    $month_name = $meses[$current_month] . ' ' . $current_year;
 
     // Navegação
     $prev_month = $current_month - 1;

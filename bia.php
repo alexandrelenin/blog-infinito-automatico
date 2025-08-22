@@ -3,7 +3,7 @@
 Plugin Name: BIA - Blog Infinito Automático
 Plugin URI: https://bloginfinitoautomatico.com.br
 Description: Gere ideias, produza conteúdos e publique automaticamente no seu blog usando IA!
-Version: 1.2.0
+Version: 1.2.1
 Author: Murilo Parrillo
 Author URI: https://bloginfinitoautomatico.com.br
 License: GPL v2 or later
@@ -132,16 +132,22 @@ function bia_verificar_dados_e_redirecionar() {
     }
 
     if ($pagina_atual === 'bia-blog-infinito-automatico' && $tab_atual !== 'minha-conta') {
-        $campos = [
+        // Verificar apenas campos críticos (não todos os campos)
+        $campos_criticos = [
             get_option('bia_gpt_dalle_key'),
-            get_option('bia_nome_completo'),
             get_option('bia_email_compra'),
-            get_option('bia_whatsapp'),
-            get_option('bia_cpf'),
-            get_option('bia_data_nascimento'),
         ];
 
-        if (in_array('', array_map('trim', $campos), true)) {
+        // Só redirecionar se TODOS os campos críticos estão vazios (primeira configuração)
+        $todos_vazios = true;
+        foreach ($campos_criticos as $campo) {
+            if (!empty(trim($campo))) {
+                $todos_vazios = false;
+                break;
+            }
+        }
+
+        if ($todos_vazios) {
             wp_safe_redirect(admin_url('admin.php?page=bia-blog-infinito-automatico&tab=minha-conta'));
             exit;
         }

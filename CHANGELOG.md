@@ -12,6 +12,28 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Melhorias na interface de usuário
 - Otimizações de performance
 
+## [1.2.1] - 2024-08-22
+
+### 🐛 Corrigido
+- **Fatal Error WordPress**: Corrigida ordem dos includes (abas antes do dashboard)
+- **Erro Calendário**: Substituída `cal_days_in_month()` por `date()` nativo para compatibilidade
+- **Compatibilidade PHP 8.x**: Substituído `match()` por `switch/case` para servidores antigos
+- **Navegação entre Abas**: Corrigida lógica de redirecionamento forçado para "Minha Conta"
+- **Web Components Conflict**: Eliminados loops de redirecionamento causando erros TinyMCE
+
+### 🔧 Melhorado
+- **Headers WordPress**: Adicionados metadados completos do plugin + proteção ABSPATH
+- **Compatibilidade**: Eliminadas dependências de extensões PHP (Calendar, Intl)
+- **Lógica de Redirecionamento**: Apenas campos críticos (API key + email) bloqueiam navegação
+- **Nomes de Páginas**: Consistência total em `bia-blog-infinito-automatico`
+- **Code Cleanup**: Removidos `error_log()` desnecessários para produção
+
+### 📖 Técnico
+- **WordPress**: Compatível 6.8.2+
+- **PHP**: Compatível 7.4+ e 8.x
+- **Dependências**: Eliminadas extensões PHP externas
+- **Testado**: Docker WordPress 6.8.2 + PHP 8.1
+
 ## [1.2.0] - 2024-01-21
 
 ### ✨ Adicionado

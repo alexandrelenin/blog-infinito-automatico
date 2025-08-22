@@ -71,10 +71,23 @@ Content production features are split into:
 3. Include CSS/JS files if needed via enqueue functions
 4. Add corresponding case in dashboard switch statement
 
+### Development Environment
+- **Docker Setup**: Use provided `docker-compose.yml` for local testing
+- **WordPress Version**: 6.8.2+ (tested)
+- **PHP Version**: 7.4+ to 8.x compatible
+- **Testing URL**: http://localhost:8080
+
 ### Debugging
-- Plugin uses extensive `error_log()` calls for debugging includes
-- Check WordPress debug logs for plugin loading issues
+- WordPress debug logs for plugin loading issues  
 - License verification errors are logged during API calls
+- Use Docker environment for safe testing
+
+### Recent Fixes (v1.2.1)
+- **Fatal Error**: Fixed includes order (tabs before dashboard)
+- **Calendar**: Replaced `cal_days_in_month()` with native `date()`
+- **PHP 8.x**: Replaced `match()` with `switch/case`
+- **Navigation**: Fixed forced redirection logic
+- **Compatibility**: Removed external PHP extension dependencies
 
 ### API Integration
 - OpenAI API key stored as `bia_gpt_dalle_key` option
